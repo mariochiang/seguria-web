@@ -142,19 +142,56 @@
         return /^[0-9.\-kK]{7,14}$/.test(value.trim());
     }
 
-    function getProductoIcon(nombre) {
-        const text = (nombre || "").toLowerCase();
+    function getProductoIcon(producto) {
+        const categoria = (producto.categoria_visual || "").toLowerCase().trim();
+        const nombre = (producto.nombre || "").toLowerCase();
 
-        if (text.includes("auto")) {
+        if (categoria === "auto") {
             return "🚗";
         }
 
-        if (text.includes("hogar") || text.includes("casa")) {
+        if (categoria === "hogar") {
             return "🏠";
         }
 
-        if (text.includes("vida") || text.includes("salud")) {
+        if (categoria === "vida" || categoria === "salud") {
             return "💚";
+        }
+
+        if (categoria === "viaje") {
+            return "✈️";
+        }
+
+        if (categoria === "mascotas") {
+            return "🐾";
+        }
+
+        if (categoria === "pyme" || categoria === "empresa") {
+            return "🏢";
+        }
+
+        if (nombre.includes("auto")) {
+            return "🚗";
+        }
+
+        if (nombre.includes("hogar") || nombre.includes("casa") || nombre.includes("vivienda")) {
+            return "🏠";
+        }
+
+        if (nombre.includes("vida") || nombre.includes("salud") || nombre.includes("medic")) {
+            return "💚";
+        }
+
+        if (nombre.includes("viaje")) {
+            return "✈️";
+        }
+
+        if (nombre.includes("mascota")) {
+            return "🐾";
+        }
+
+        if (nombre.includes("pyme") || nombre.includes("empresa")) {
+            return "🏢";
         }
 
         return "🛡️";
@@ -198,7 +235,7 @@
         quoteProducts.innerHTML = productosDisponibles
             .map(function (producto) {
                 const prima = Number(producto.prima_base || 0).toLocaleString("es-CL");
-                const icono = getProductoIcon(producto.nombre);
+                const icono = getProductoIcon(producto);
 
                 return `
                     <article class="quote-card">
