@@ -1,0 +1,165 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SegurIA | Seguros inteligentes</title>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="SegurIA inicio">
+            <span class="brand-mark">S</span>
+            <span>SegurIA</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegacion principal">
+            <a href="#productos">Productos</a>
+            <a href="#beneficios">Beneficios</a>
+            <a href="#atencion">Atención</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+
+        <a class="header-action" href="#contacto">Cotizar</a>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-media" aria-hidden="true"></div>
+            <div class="hero-content">
+                <p class="eyebrow">Seguros para personas y empresas</p>
+                <h1>SegurIA</h1>
+                <p class="hero-copy">
+                    Protección simple, asistencia rápida y productos diseñados para acompañar
+                    cada etapa de tu vida.
+                </p>
+                <div class="hero-actions">
+                    <a class="primary-link" href="#productos">Ver seguros</a>
+                    <a class="secondary-link" href="#atencion">Necesito ayuda</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section band-light" id="productos">
+            <div class="section-heading">
+                <p class="eyebrow">Productos</p>
+                <h2>Soluciones de protección</h2>
+                <p>
+                    Una oferta ficticia para demostrar la experiencia web y el asistente
+                    conectado a tus servicios en Azure.
+                </p>
+            </div>
+
+            <div class="product-grid">
+                <article class="product-card">
+                    <div class="product-icon">A</div>
+                    <h3>Seguro Auto</h3>
+                    <p>Asistencia en ruta, cobertura por daños y apoyo ante siniestros.</p>
+                </article>
+                <article class="product-card">
+                    <div class="product-icon">V</div>
+                    <h3>Seguro Vida</h3>
+                    <p>Respaldo financiero para tu familia frente a eventos inesperados.</p>
+                </article>
+                <article class="product-card">
+                    <div class="product-icon">H</div>
+                    <h3>Seguro Hogar</h3>
+                    <p>Protección para vivienda, contenidos y emergencias domésticas.</p>
+                </article>
+                <article class="product-card">
+                    <div class="product-icon">S</div>
+                    <h3>Seguro Salud</h3>
+                    <p>Orientación, reembolsos y beneficios para cuidar tu bienestar.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section split-section" id="beneficios">
+            <div>
+                <p class="eyebrow">Beneficios</p>
+                <h2>Atención más clara y rápida</h2>
+                <p>
+                    SegurIA combina procesos digitales con asistencia personalizada para
+                    que los clientes encuentren respuestas sin perder tiempo.
+                </p>
+            </div>
+            <div class="benefit-list">
+                <div>
+                    <strong>Identificación por RUT</strong>
+                    <span>El asistente reconoce al cliente y consulta sus productos activos.</span>
+                </div>
+                <div>
+                    <strong>Canales conectados</strong>
+                    <span>La experiencia puede integrarse con Azure Functions y APIs propias.</span>
+                </div>
+                <div>
+                    <strong>Escalable</strong>
+                    <span>Lista para sumar IA conversacional, reclamos y seguimiento.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section support-band" id="atencion">
+            <div class="support-content">
+                <p class="eyebrow">Atención al cliente</p>
+                <h2>Tu asistente digital está disponible aquí mismo</h2>
+                <p>
+                    Usa el botón de chat en la esquina inferior derecha para consultar por
+                    tus productos contratados. Solo necesitaremos tu RUT.
+                </p>
+            </div>
+        </section>
+
+        <section class="section contact-section" id="contacto">
+            <div>
+                <p class="eyebrow">Contacto</p>
+                <h2>Canales de ayuda</h2>
+            </div>
+            <div class="contact-grid">
+                <div>
+                    <span>Teléfono</span>
+                    <strong>600 123 4567</strong>
+                </div>
+                <div>
+                    <span>Email</span>
+                    <strong>contacto@seguria.demo</strong>
+                </div>
+                <div>
+                    <span>Horario</span>
+                    <strong>Lun a Vie, 09:00 a 18:00</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button class="chat-launcher" type="button" aria-label="Abrir chat">
+        <span class="chat-dot"></span>
+        <span class="chat-icon">Chat</span>
+    </button>
+
+    <section class="chat-widget" aria-label="Chat de atención" hidden>
+        <header class="chat-header">
+            <div>
+                <strong>Asistente SegurIA</strong>
+                <span>En línea</span>
+            </div>
+            <button class="icon-button" type="button" aria-label="Cerrar chat">x</button>
+        </header>
+
+        <div class="chat-messages" aria-live="polite"></div>
+
+        <form class="chat-form">
+            <input id="chat-input"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="Escribe tu RUT o mensaje"
+                   aria-label="Mensaje">
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
