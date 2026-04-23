@@ -154,8 +154,12 @@
             return "🏠";
         }
 
-        if (categoria === "vida" || categoria === "salud") {
-            return "💚";
+        if (categoria === "vida") {
+            return "❤️";
+        }
+
+        if (categoria === "salud") {
+            return "🩺";
         }
 
         if (categoria === "viaje") {
