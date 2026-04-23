@@ -139,9 +139,11 @@
                 return null;
             }
 
-            rutIdentificado = data.rut || rutIdentificado || rut;
-            clienteIdentificado = data.cliente || clienteIdentificado || "";
-            productos = Array.isArray(data.productos) ? data.productos : productos;
+            if (data.cliente_identificado === true) {
+                rutIdentificado = data.rut || rut;
+                clienteIdentificado = data.cliente || "";
+                productos = Array.isArray(data.productos) ? data.productos : [];
+            }
 
             return data;
         } catch (error) {
