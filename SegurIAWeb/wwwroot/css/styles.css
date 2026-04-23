@@ -302,18 +302,32 @@ a {
 
 .quote-modal-backdrop {
     align-items: center;
-    backdrop-filter: blur(12px);
-    background: rgba(7, 21, 61, 0.42);
+    backdrop-filter: blur(0px);
+    background: rgba(7, 21, 61, 0);
     display: flex;
     inset: 0;
     justify-content: center;
+    opacity: 0;
     padding: 32px 20px;
     position: fixed;
+    transition: opacity 0.24s ease, backdrop-filter 0.24s ease, background 0.24s ease;
     z-index: 120;
 }
 
     .quote-modal-backdrop[hidden] {
         display: none;
+    }
+
+    .quote-modal-backdrop.is-visible {
+        backdrop-filter: blur(12px);
+        background: rgba(7, 21, 61, 0.42);
+        opacity: 1;
+    }
+
+    .quote-modal-backdrop.is-closing {
+        backdrop-filter: blur(0px);
+        background: rgba(7, 21, 61, 0);
+        opacity: 0;
     }
 
 .quote-modal {
@@ -322,10 +336,23 @@ a {
     border-radius: 24px;
     box-shadow: 0 30px 80px rgba(7, 21, 61, 0.28);
     max-height: min(760px, calc(100vh - 64px));
+    opacity: 0;
     overflow: auto;
     padding: 28px;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 0.24s ease, transform 0.24s ease;
     width: min(1080px, 100%);
 }
+
+    .quote-modal.is-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    .quote-modal.is-closing {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+    }
 
 .quote-modal-header {
     align-items: start;
@@ -407,17 +434,35 @@ a {
     gap: 8px;
 }
 
-    .quote-card-top h3 {
-        font-size: 24px;
-        margin: 0;
-    }
+.quote-card-heading {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
 
-    .quote-card-top span {
-        color: var(--muted);
-        font-size: 14px;
-        font-weight: 700;
-        text-transform: uppercase;
-    }
+.quote-card-top h3 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.quote-card-top span {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.quote-product-icon {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(24, 182, 166, 0.18), rgba(7, 21, 61, 0.08));
+    border-radius: 14px;
+    display: inline-flex;
+    font-size: 30px;
+    height: 56px;
+    justify-content: center;
+    min-width: 56px;
+}
 
 .quote-price {
     color: var(--navy);
@@ -644,4 +689,9 @@ a {
         .quote-modal-header h2 {
             font-size: 30px;
         }
+
+    .quote-card-heading {
+        align-items: start;
+        flex-direction: column;
+    }
 }

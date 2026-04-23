@@ -14,12 +14,14 @@
     const quoteFeedback = document.querySelector("#quote-feedback");
     const cotizarLink = document.querySelector("#cotizar-link");
     const quoteModalBackdrop = document.querySelector("#quote-modal-backdrop");
+    const quoteModal = document.querySelector("#quote-modal");
     const quoteModalClose = document.querySelector("#quote-modal-close");
 
     let rutIdentificado = "";
     let clienteIdentificado = "";
     let productos = [];
     let started = false;
+    let isClosingQuoteModal = false;
 
     function addMessage(text, type) {
         const item = document.createElement("div");
@@ -101,26 +103,61 @@
     }
 
     function openQuoteModal() {
-        if (!quoteModalBackdrop) {
+        if (!quoteModalBackdrop || !quoteModal || isClosingQuoteModal) {
             return;
         }
 
         quoteModalBackdrop.hidden = false;
+        quoteModalBackdrop.classList.remove("is-closing");
+        quoteModalBackdrop.classList.add("is-visible");
+        quoteModal.classList.remove("is-closing");
+        quoteModal.classList.add("is-visible");
+
         document.body.classList.add("modal-open");
         cargarProductos();
     }
 
     function closeQuoteModal() {
-        if (!quoteModalBackdrop) {
+        if (!quoteModalBackdrop || !quoteModal || quoteModalBackdrop.hidden || isClosingQuoteModal) {
             return;
         }
 
-        quoteModalBackdrop.hidden = true;
-        document.body.classList.remove("modal-open");
+        isClosingQuoteModal = true;
+
+        quoteModalBackdrop.classList.remove("is-visible");
+        quoteModalBackdrop.classList.add("is-closing");
+        quoteModal.classList.remove("is-visible");
+        quoteModal.classList.add("is-closing");
+
+        window.setTimeout(function () {
+            quoteModalBackdrop.hidden = true;
+            quoteModalBackdrop.classList.remove("is-closing");
+            quoteModal.classList.remove("is-closing");
+            document.body.classList.remove("modal-open");
+            isClosingQuoteModal = false;
+        }, 240);
     }
 
     function looksLikeRut(value) {
         return /^[0-9.\-kK]{7,14}$/.test(value.trim());
+    }
+
+    function getProductoIcon(nombre) {
+        const text = (nombre || "").toLowerCase();
+
+        if (text.includes("auto")) {
+            return "🚗";
+        }
+
+        if (text.includes("hogar") || text.includes("casa")) {
+            return "🏠";
+        }
+
+        if (text.includes("vida") || text.includes("salud")) {
+            return "💚";
+        }
+
+        return "🛡️";
     }
 
     function showQuoteFeedback(text, isError) {
@@ -161,11 +198,15 @@
         quoteProducts.innerHTML = productosDisponibles
             .map(function (producto) {
                 const prima = Number(producto.prima_base || 0).toLocaleString("es-CL");
+                const icono = getProductoIcon(producto.nombre);
 
                 return `
                     <article class="quote-card">
                         <div class="quote-card-top">
-                            <h3>${producto.nombre}</h3>
+                            <div class="quote-card-heading">
+                                <h3>${producto.nombre}</h3>
+                                <span class="quote-product-icon" aria-hidden="true">${icono}</span>
+                            </div>
                             <span>Prima base referencial</span>
                         </div>
                         <p class="quote-price">$${prima}</p>
