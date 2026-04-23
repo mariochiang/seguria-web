@@ -46,38 +46,16 @@
         return /^[0-9.\-kK]{7,14}$/.test(value.trim());
     }
 
-    function nextLocalReply(message) {
-        const text = message.toLowerCase();
-
-        if (text.includes("reclamo") || text.includes("problema")) {
-            return "Puedo orientarte con un reclamo. En la siguiente versión registraremos el caso automáticamente; por ahora te recomiendo indicar el producto y una breve descripción del problema.";
-        }
-
-        if (text.includes("siniestro") || text.includes("choque")) {
-            return "Entiendo. Para un siniestro necesitaremos fecha, lugar, producto asociado y una descripción breve. Pronto conectaremos este flujo al registro de casos.";
-        }
-
-        if (text.includes("cancelar") || text.includes("baja")) {
-            return "Puedo ayudarte con esa solicitud. Antes de avanzar, un ejecutivo debería revisar alternativas según tus productos vigentes.";
-        }
-
-        if (productos.length > 0) {
-            return `Tengo registrado que tus productos activos son: ${productos.join(", ")}. Puedes contarme qué necesitas y te orientaré con el siguiente paso.`;
-        }
-
-        return "Cuéntame un poco más sobre lo que necesitas y te orientaré con el siguiente paso.";
-    }
-
-    async function identifyCustomer(rut, message) {
+    async function enviarMensajeBackend(rut, mensaje, loadingText) {
         if (!functionUrl || functionUrl.includes("TU_FUNCTION")) {
             addMessage(
                 "Falta configurar la URL de la Azure Function en config.js.",
                 "bot error"
             );
-            return;
+            return null;
         }
 
-        addMessage("Consultando tus datos...", "bot");
+        addMessage(loadingText, "bot");
 
         try {
             const response = await fetch(functionUrl, {
@@ -87,7 +65,7 @@
                 },
                 body: JSON.stringify({
                     rut,
-                    mensaje: message || "hola"
+                    mensaje
                 })
             });
 
@@ -101,21 +79,49 @@
             }
 
             if (!response.ok) {
-                addMessage(data.respuesta || "No pude completar la consulta.", "bot error");
-                return;
+                addMessage(
+                    data.respuesta || data.detail || "No pude completar la consulta.",
+                    "bot error"
+                );
+                return null;
             }
 
-            rutIdentificado = data.rut || rut;
-            clienteIdentificado = data.cliente || "";
-            productos = Array.isArray(data.productos) ? data.productos : [];
+            rutIdentificado = data.rut || rutIdentificado || rut;
+            clienteIdentificado = data.cliente || clienteIdentificado || "";
+            productos = Array.isArray(data.productos) ? data.productos : productos;
 
-            addMessage(data.respuesta || "Cliente identificado correctamente.", "bot");
+            return data;
         } catch (error) {
             addMessage(
                 "No pude conectar con el servicio. Revisa CORS o la URL de la Function.",
                 "bot error"
             );
+            return null;
         }
+    }
+
+    async function identifyCustomer(rut) {
+        const data = await enviarMensajeBackend(rut, "hola", "Consultando tus datos...");
+
+        if (!data) {
+            return;
+        }
+
+        addMessage(data.respuesta || "Cliente identificado correctamente.", "bot");
+    }
+
+    async function continueConversation(message) {
+        const data = await enviarMensajeBackend(
+            rutIdentificado,
+            message,
+            "Procesando tu consulta..."
+        );
+
+        if (!data) {
+            return;
+        }
+
+        addMessage(data.respuesta || "No recibi una respuesta del servicio.", "bot");
     }
 
     launcher.addEventListener("click", openChat);
@@ -139,12 +145,10 @@
                 return;
             }
 
-            await identifyCustomer(value, "hola");
+            await identifyCustomer(value);
             return;
         }
 
-        const reply = nextLocalReply(value);
-        const namePrefix = clienteIdentificado ? `${clienteIdentificado}, ` : "";
-        addMessage(`${namePrefix}${reply}`, "bot");
+        await continueConversation(value);
     });
 })();
