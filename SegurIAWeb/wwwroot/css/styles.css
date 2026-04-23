@@ -267,6 +267,89 @@ a {
     color: #d7e7f2;
 }
 
+.quote-section {
+    background: linear-gradient(180deg, #f9fbfd 0%, #eef5f8 100%);
+}
+
+.quote-feedback {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 28px;
+    padding: 16px 18px;
+}
+
+.quote-feedback-info {
+    background: #e8fbf7;
+    border: 1px solid #b9eee5;
+    color: #0e5f55;
+}
+
+.quote-feedback-error {
+    background: #fff1f1;
+    border: 1px solid #ffcaca;
+    color: #9a2d2d;
+}
+
+.quote-products {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 28px;
+}
+
+.quote-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(16, 33, 51, 0.08);
+    display: grid;
+    gap: 20px;
+    padding: 24px;
+}
+
+.quote-card-top {
+    display: grid;
+    gap: 8px;
+}
+
+    .quote-card-top h3 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .quote-card-top span {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+.quote-price {
+    color: var(--navy);
+    font-size: 32px;
+    font-weight: 900;
+    margin: 0;
+}
+
+.quote-action {
+    background: var(--teal);
+    border: 0;
+    border-radius: 8px;
+    color: var(--navy);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 900;
+    min-height: 46px;
+    padding: 0 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .quote-action:hover {
+        box-shadow: 0 10px 20px rgba(24, 182, 166, 0.18);
+        transform: translateY(-1px);
+    }
+
 .contact-section {
     align-items: start;
     display: grid;
@@ -360,12 +443,26 @@ a {
         margin-top: 3px;
     }
 
+.chat-reset-button,
 .icon-button {
-    background: rgba(255, 255, 255, 0.12);
     border: 0;
     border-radius: 8px;
     color: white;
     cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    min-height: 34px;
+}
+
+.chat-reset-button {
+    background: rgba(255, 255, 255, 0.18);
+    margin-left: auto;
+    margin-right: 8px;
+    padding: 0 12px;
+}
+
+.icon-button {
+    background: rgba(255, 255, 255, 0.12);
     font-size: 18px;
     height: 34px;
     width: 34px;
@@ -462,7 +559,8 @@ a {
     .product-grid,
     .split-section,
     .contact-section,
-    .contact-grid {
+    .contact-grid,
+    .quote-products {
         grid-template-columns: 1fr;
     }
 }
