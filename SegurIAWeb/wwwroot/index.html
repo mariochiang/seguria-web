@@ -21,7 +21,7 @@
             <a href="#contacto">Contacto</a>
         </nav>
 
-        <a class="header-action" href="#cotizar" id="cotizar-link">Cotizar</a>
+        <a class="header-action" href="#" id="cotizar-link">Cotizar</a>
     </header>
 
     <main>
@@ -111,19 +111,6 @@
             </div>
         </section>
 
-        <section class="section quote-section" id="cotizar">
-            <div class="section-heading">
-                <p class="eyebrow">Cotización</p>
-                <h2>Explora productos disponibles</h2>
-                <p>
-                    Revisa el catálogo disponible y elige el seguro que quieres cotizar.
-                </p>
-            </div>
-
-            <div id="quote-feedback" class="quote-feedback" hidden></div>
-            <div id="quote-products" class="quote-products"></div>
-        </section>
-
         <section class="section contact-section" id="contacto">
             <div>
                 <p class="eyebrow">Contacto</p>
@@ -145,6 +132,21 @@
             </div>
         </section>
     </main>
+
+    <div class="quote-modal-backdrop" id="quote-modal-backdrop" hidden>
+        <section class="quote-modal" id="quote-modal" aria-label="Cotizar productos" aria-modal="true" role="dialog">
+            <header class="quote-modal-header">
+                <div>
+                    <p class="eyebrow">Cotización</p>
+                    <h2>Elige el producto que quieres cotizar</h2>
+                </div>
+                <button class="quote-modal-close" id="quote-modal-close" type="button" aria-label="Cerrar cotización">x</button>
+            </header>
+
+            <div id="quote-feedback" class="quote-feedback" hidden></div>
+            <div id="quote-products" class="quote-products"></div>
+        </section>
+    </div>
 
     <button class="chat-launcher" type="button" aria-label="Abrir chat">
         <span class="chat-dot"></span>

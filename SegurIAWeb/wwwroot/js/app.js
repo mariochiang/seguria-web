@@ -13,6 +13,8 @@
     const quoteProducts = document.querySelector("#quote-products");
     const quoteFeedback = document.querySelector("#quote-feedback");
     const cotizarLink = document.querySelector("#cotizar-link");
+    const quoteModalBackdrop = document.querySelector("#quote-modal-backdrop");
+    const quoteModalClose = document.querySelector("#quote-modal-close");
 
     let rutIdentificado = "";
     let clienteIdentificado = "";
@@ -96,6 +98,25 @@
     function closeChat() {
         widget.hidden = true;
         launcher.hidden = false;
+    }
+
+    function openQuoteModal() {
+        if (!quoteModalBackdrop) {
+            return;
+        }
+
+        quoteModalBackdrop.hidden = false;
+        document.body.classList.add("modal-open");
+        cargarProductos();
+    }
+
+    function closeQuoteModal() {
+        if (!quoteModalBackdrop) {
+            return;
+        }
+
+        quoteModalBackdrop.hidden = true;
+        document.body.classList.remove("modal-open");
     }
 
     function looksLikeRut(value) {
@@ -300,15 +321,33 @@
     }
 
     ensureResetButton();
-    cargarProductos();
 
     if (cotizarLink) {
-        cotizarLink.addEventListener("click", function () {
-            setTimeout(function () {
-                cargarProductos();
-            }, 150);
+        cotizarLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            openQuoteModal();
         });
     }
+
+    if (quoteModalClose) {
+        quoteModalClose.addEventListener("click", function () {
+            closeQuoteModal();
+        });
+    }
+
+    if (quoteModalBackdrop) {
+        quoteModalBackdrop.addEventListener("click", function (event) {
+            if (event.target === quoteModalBackdrop) {
+                closeQuoteModal();
+            }
+        });
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && quoteModalBackdrop && !quoteModalBackdrop.hidden) {
+            closeQuoteModal();
+        }
+    });
 
     launcher.addEventListener("click", openChat);
     closeButton.addEventListener("click", closeChat);
