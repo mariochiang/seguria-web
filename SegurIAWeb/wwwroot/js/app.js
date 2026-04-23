@@ -20,6 +20,57 @@
         item.textContent = text;
         messages.appendChild(item);
         messages.scrollTop = messages.scrollHeight;
+        return item;
+    }
+
+    function resetConversation(options) {
+        const settings = options || {};
+        const keepOpen = settings.keepOpen !== false;
+        const showWelcome = settings.showWelcome !== false;
+
+        rutIdentificado = "";
+        clienteIdentificado = "";
+        productos = [];
+        started = false;
+        messages.innerHTML = "";
+
+        if (keepOpen) {
+            widget.hidden = false;
+            launcher.hidden = true;
+        }
+
+        if (showWelcome) {
+            addMessage(
+                "Hola, soy el asistente virtual de SegurIA. Para comenzar, indícame tu RUT.",
+                "bot"
+            );
+            started = true;
+        }
+
+        input.value = "";
+        input.focus();
+    }
+
+    function ensureResetButton() {
+        if (!closeButton || !closeButton.parentElement) {
+            return;
+        }
+
+        const header = closeButton.parentElement;
+        const resetButton = document.createElement("button");
+        resetButton.type = "button";
+        resetButton.className = "chat-reset-button";
+        resetButton.textContent = "Nueva consulta";
+        resetButton.style.marginRight = "0.5rem";
+
+        resetButton.addEventListener("click", function () {
+            resetConversation({
+                keepOpen: true,
+                showWelcome: true
+            });
+        });
+
+        header.insertBefore(resetButton, closeButton);
     }
 
     function openChat() {
@@ -55,7 +106,7 @@
             return null;
         }
 
-        addMessage(loadingText, "bot");
+        const loadingMessage = addMessage(loadingText, "bot");
 
         try {
             const response = await fetch(functionUrl, {
@@ -68,6 +119,8 @@
                     mensaje
                 })
             });
+
+            loadingMessage.remove();
 
             const raw = await response.text();
             let data = {};
@@ -92,6 +145,7 @@
 
             return data;
         } catch (error) {
+            loadingMessage.remove();
             addMessage(
                 "No pude conectar con el servicio. Revisa CORS o la URL de la Function.",
                 "bot error"
@@ -123,6 +177,8 @@
 
         addMessage(data.respuesta || "No recibi una respuesta del servicio.", "bot");
     }
+
+    ensureResetButton();
 
     launcher.addEventListener("click", openChat);
     closeButton.addEventListener("click", closeChat);
