@@ -274,14 +274,14 @@ a {
 .contact-section {
     align-items: start;
     display: grid;
-    gap: 32px;
-    grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
+    gap: 40px;
+    grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
 }
 
 .contact-grid {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 24px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
     .contact-grid div {
@@ -301,6 +301,7 @@ a {
         display: block;
         font-size: 18px;
         line-height: 1.35;
+        max-width: 100%;
         overflow-wrap: anywhere;
         word-break: break-word;
     }
@@ -650,13 +651,9 @@ a {
         padding: 0 14px;
     }
 
-@media (max-width: 1180px) {
+@media (max-width: 1320px) {
     .contact-section {
         grid-template-columns: 1fr;
-    }
-
-    .contact-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
