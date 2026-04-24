@@ -279,14 +279,16 @@ a {
 }
 
 .contact-grid {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px 24px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
     .contact-grid div {
         border-left: 4px solid var(--teal);
-        min-width: 0;
+        flex: 1 1 240px;
+        max-width: 100%;
+        min-width: 240px;
         padding: 6px 0 6px 16px;
     }
 
@@ -303,6 +305,7 @@ a {
         line-height: 1.35;
         max-width: 100%;
         overflow-wrap: anywhere;
+        white-space: normal;
         word-break: break-word;
     }
 
@@ -651,7 +654,7 @@ a {
         padding: 0 14px;
     }
 
-@media (max-width: 1320px) {
+@media (max-width: 1400px) {
     .contact-section {
         grid-template-columns: 1fr;
     }
@@ -682,13 +685,16 @@ a {
 
     .product-grid,
     .split-section,
-    .contact-grid,
     .quote-products {
         grid-template-columns: 1fr;
     }
 
     .contact-section {
         grid-template-columns: 1fr;
+    }
+
+    .contact-grid div {
+        min-width: 100%;
     }
 
     .quote-modal {
