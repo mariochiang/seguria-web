@@ -275,17 +275,18 @@ a {
     align-items: start;
     display: grid;
     gap: 32px;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
 }
 
 .contact-grid {
     display: grid;
-    gap: 12px;
+    gap: 20px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
     .contact-grid div {
         border-left: 4px solid var(--teal);
+        min-width: 0;
         padding: 6px 0 6px 16px;
     }
 
@@ -297,7 +298,11 @@ a {
     }
 
     .contact-grid strong {
+        display: block;
         font-size: 18px;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
 .quote-modal-backdrop {
@@ -645,6 +650,16 @@ a {
         padding: 0 14px;
     }
 
+@media (max-width: 1180px) {
+    .contact-section {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 880px) {
     .site-header {
         gap: 16px;
@@ -670,9 +685,12 @@ a {
 
     .product-grid,
     .split-section,
-    .contact-section,
     .contact-grid,
     .quote-products {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-section {
         grid-template-columns: 1fr;
     }
 
