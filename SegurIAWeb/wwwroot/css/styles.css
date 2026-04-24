@@ -654,7 +654,7 @@ a {
         padding: 0 14px;
     }
 
-@media (max-width: 1600px) {
+@media (max-width: 1800px) {
     .contact-section {
         grid-template-columns: 1fr;
     }
